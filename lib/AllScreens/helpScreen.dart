@@ -15,8 +15,12 @@ class HelpScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
-          title: Text("Help", style: TextStyle(fontFamily: "Brand Bold"),),
-          backgroundColor: Colors.red[300],
+          elevation: 0,
+          title: Text("Help", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.red[300]
+          ),),
+          backgroundColor: Colors.grey[100],
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,

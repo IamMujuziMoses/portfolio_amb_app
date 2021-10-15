@@ -94,34 +94,35 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         body: child[index],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.red[300],
+          backgroundColor: Colors.grey[100],
           onTap: onTappedBar,
-          elevation: 8,
+          elevation: 0,
           showUnselectedLabels: false,
           showSelectedLabels: true,
           selectedLabelStyle: TextStyle(
+            fontFamily: "Brand Bold",
             fontWeight: FontWeight.w500,
           ),
-          selectedItemColor: Colors.white,
+          selectedItemColor: Colors.red[300],
           currentIndex: index,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.house, color: Colors.white,),
+              icon: Icon(CupertinoIcons.house, color: Colors.red[300],),
               label: "Home",
               activeIcon: selectedIcon(CupertinoIcons.house_fill),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history, color: Colors.white,),
+              icon: Icon(Icons.history, color: Colors.red[300],),
               label: "History",
               activeIcon: selectedIcon(Icons.history),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.star, color: Colors.white),
+              icon: Icon(CupertinoIcons.star, color: Colors.red[300]),
               label: "Ratings",
               activeIcon: selectedIcon(CupertinoIcons.star_fill),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_circle, color: Colors.white),
+              icon: Icon(CupertinoIcons.person_circle, color: Colors.red[300]),
               label: "Profile",
               activeIcon: selectedIcon(CupertinoIcons.person_circle_fill),
             ),
@@ -135,13 +136,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       height: 3.5 * SizeConfig.heightMultiplier,
       width: 28 * SizeConfig.widthMultiplier,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.red[300],
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
         child: Icon(
           icon,
-          color: Colors.red[300],
+          color: Colors.white,
         ),
       ),
     );

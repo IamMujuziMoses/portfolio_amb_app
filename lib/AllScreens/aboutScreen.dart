@@ -15,8 +15,12 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
-          title: Text("About", style: TextStyle(fontFamily: "Brand Bold"),),
-          backgroundColor: Colors.red[300],
+          elevation: 0,
+          title: Text("About", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.red[300]
+          ),),
+          backgroundColor: Colors.grey[100],
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -108,7 +112,7 @@ class AboutScreen extends StatelessWidget {
                 height: 13 * SizeConfig.heightMultiplier,
                 width: 50 * SizeConfig.widthMultiplier,
                 decoration: BoxDecoration(
-                  color: Colors.red[300],
+                  color: Colors.red[100],
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(10),
                   ),
@@ -117,7 +121,7 @@ class AboutScreen extends StatelessWidget {
                   child: Image.asset(image,
                     height: 12 * SizeConfig.heightMultiplier,
                     width: 16 * SizeConfig.widthMultiplier,
-                    color: Colors.white,
+                    color: Colors.red[300],
                   ),
                 ),
               ),

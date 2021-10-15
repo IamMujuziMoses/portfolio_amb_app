@@ -33,7 +33,7 @@ class CachedImage extends StatelessWidget {
             fit: fit,
             placeholder: (context, url) =>
                 Center(
-                  child: CircularProgressIndicator()),
+                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red[300]),)),
             errorWidget: (context, url, error) =>
                 Image.asset("images/user_icon.png"),
           ) : Image.asset("images/user_icon.png"),

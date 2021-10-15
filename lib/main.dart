@@ -4,6 +4,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
 import 'package:creativedata_ambulance_app/Provider/appData.dart';
 import 'package:creativedata_ambulance_app/Provider/userProvider.dart';
+import 'package:creativedata_ambulance_app/Services/database.dart';
 import 'package:creativedata_ambulance_app/Widgets/customBottomNavBar.dart';
 import 'package:creativedata_ambulance_app/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,19 +29,22 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-final assetsAudioPlayer = AssetsAudioPlayer();
+AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
 Position currentPosition;
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 User currentDriver = firebaseAuth.currentUser;
+DatabaseMethods databaseMethods = DatabaseMethods();
 StreamSubscription<Position> homePageStreamSubscription;
 StreamSubscription<Position> rideStreamSubscription;
 
 class _MyAppState extends State<MyApp> {
 
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.grey[100],
+      //systemNavigationBarColor: Colors.red[300],
+    ));
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
@@ -51,10 +55,11 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<UserProvider>(create: (context) => UserProvider(),),
       ],
       child: new MaterialApp(
-        title: "EmAlert Ambulance App",
+        title: "Siro Ambulance App",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.grey,
+          primaryIconTheme: IconThemeData(color: Colors.red[300]),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: firebaseAuth.currentUser  == null ? LoginScreen() : CustomBottomNavBar(),

@@ -24,13 +24,17 @@ class _HistoryPageState extends State<HistoryPage> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[300],
-
-        title: Text("Trips History", style: TextStyle(fontFamily: "Brand Bold"),),
+        elevation: 0,
+        backgroundColor: Colors.grey[100],
+        title: Text("Trips History", style: TextStyle(
+          fontFamily: "Brand Bold",
+          color: Colors.red[300]
+        ),),
       ),
       body: Container(
         color: Colors.grey[100],
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: ListView.separated(
             itemBuilder: (context, index) {
               return HistoryItem(

@@ -54,6 +54,7 @@ class _UserAccountState extends State<UserAccount> {
   Widget _userAccBody(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height - 15 * SizeConfig.heightMultiplier,
       decoration: BoxDecoration(
         color: Colors.grey[100],
       ),
@@ -281,7 +282,6 @@ class _UserAccountState extends State<UserAccount> {
                   ),
                 ),
             ),
-            SizedBox(height: 23 * SizeConfig.heightMultiplier,),
           ],
         ),
       ),
@@ -339,17 +339,27 @@ Widget custom({@required Widget body, String doctorsName, imageUrl, BuildContext
   return CustomScrollView(
     slivers: <Widget>[
       SliverAppBar(
-        backgroundColor: Colors.red[300],
+        backgroundColor: Colors.grey[100],
         expandedHeight: 350,
         floating: false,
         pinned: true,
+        elevation: 0,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
-          title: Text(doctorsName, style: TextStyle(
-            color: Colors.white,
-            fontFamily: "Brand Bold",
-            fontSize: 2.5 * SizeConfig.textMultiplier,
-          ),),
+          title: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(15)
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(doctorsName, style: TextStyle(
+                color: Colors.red[300],
+                fontFamily: "Brand Bold",
+                fontSize: 2.5 * SizeConfig.textMultiplier,
+              ),),
+            ),
+          ),
           background: GestureDetector(
             onTap: () => Navigator.push(
                 context,

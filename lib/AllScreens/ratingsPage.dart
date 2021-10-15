@@ -23,8 +23,12 @@ class _RatingsPageState extends State<RatingsPage> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ratings", style: TextStyle(fontFamily: "Brand Bold"),),
-        backgroundColor: Colors.red[300],
+        elevation: 0,
+        title: Text("Ratings", style: TextStyle(
+          fontFamily: "Brand Bold",
+          color: Colors.red[300]
+        ),),
+        backgroundColor: Colors.grey[100],
       ),
       body: Container(
         color: Colors.grey[100],

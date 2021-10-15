@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
 import 'package:creativedata_ambulance_app/AllScreens/newRideScreen.dart';
 import 'package:creativedata_ambulance_app/Assistants/assistantMethods.dart';
@@ -104,6 +105,7 @@ class NotificationDialog extends StatelessWidget {
                       padding: EdgeInsets.all(8.0),
                       onPressed: () {
                         assetsAudioPlayer.stop();
+                        assetsAudioPlayer = new AssetsAudioPlayer();
                         Navigator.of(context).pop();
                       },
                       child: Text("Cancel".toUpperCase(), style: TextStyle(
@@ -118,6 +120,7 @@ class NotificationDialog extends StatelessWidget {
                       ),
                       onPressed: () {
                         assetsAudioPlayer.stop();
+                        assetsAudioPlayer = new AssetsAudioPlayer();
                         checkRideAvailability(context);
                       },
                       color: Colors.green[300],

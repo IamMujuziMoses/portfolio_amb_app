@@ -5,9 +5,11 @@ import 'package:creativedata_ambulance_app/AllScreens/aboutScreen.dart';
 import 'package:creativedata_ambulance_app/AllScreens/helpScreen.dart';
 import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
 import 'package:creativedata_ambulance_app/AllScreens/personalDetails.dart';
+import 'package:creativedata_ambulance_app/AllScreens/registerScreen.dart';
 import 'package:creativedata_ambulance_app/Models/directionDetails.dart';
 import 'package:creativedata_ambulance_app/Notifications/pushNotificationService.dart';
 import 'package:creativedata_ambulance_app/Services/database.dart';
+import 'package:creativedata_ambulance_app/Utilities/permissions.dart';
 import 'package:creativedata_ambulance_app/Widgets/cachedImage.dart';
 import 'package:creativedata_ambulance_app/Widgets/divider.dart';
 import 'package:creativedata_ambulance_app/Widgets/photoViewPage.dart';
@@ -17,8 +19,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../sizeConfig.dart';
 /*
@@ -162,10 +167,12 @@ class _HomePageState extends State<HomePage> {
       onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
           centerTitle: true,
-          backgroundColor: Colors.red[300],
-          title: Text("Siro Ambulance", style: TextStyle(fontFamily: "Brand Bold"),),
+          backgroundColor: Colors.grey[100],
+          title: Text("Siro Ambulance", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.red[300]
+          ),),
         ),
         drawer: Container(
           color: Colors.white,
@@ -174,7 +181,7 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               children: <Widget>[
                 DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.red[300]),
+                  decoration: BoxDecoration(color: Colors.grey[100]),
                   child: Row(
                     children: <Widget>[
                       CachedImage(
@@ -199,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Text(widget.name, style: TextStyle(
                                     fontSize: 2.3 * SizeConfig.textMultiplier,
                                     fontFamily: "Brand Bold",
-                                    color: Colors.white,
+                                    color: Colors.red[300],
                                     fontWeight: FontWeight.bold,
                                   ), overflow: TextOverflow.ellipsis,),
                                 ),
@@ -212,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 2 * SizeConfig.heightMultiplier,
                                   width: 36 * SizeConfig.widthMultiplier,
                                   child: Text(widget.email, style: TextStyle(
-                                    color: Colors.white60,
+                                    color: Colors.red[200],
                                     fontWeight: FontWeight.w500,
                                     fontFamily: "Brand-Regular",
                                     fontSize: 1.5 * SizeConfig.textMultiplier,
@@ -342,17 +349,42 @@ class _HomePageState extends State<HomePage> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
+          color: Colors.grey[100],
           child: Stack(
             children: <Widget>[
               Container(
-                height: 16 * SizeConfig.heightMultiplier,
-                decoration: BoxDecoration(
-                  color: Colors.red[300],
+                  clipBehavior: Clip.hardEdge,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  child: GoogleMap(
+                    padding: EdgeInsets.only(
+                      top: 1.3 * SizeConfig.heightMultiplier,
+                    ),
+                    mapType: MapType.normal,
+                    myLocationButtonEnabled: true,
+                    initialCameraPosition: HomePage._kGooglePlex,
+                    myLocationEnabled: true,
+                    zoomControlsEnabled: true,
+                    zoomGesturesEnabled: true,
+                    onMapCreated: (GoogleMapController controller) {
+                      _googleMapController.complete(controller);
+                      newGoogleMapController = controller;
+                      locatePosition();
+                    },
+                  ),
                 ),
+              Container(
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 20,
                     right: 10,
+                    top: 15
                   ),
                   child: Column(
                     children: <Widget>[
@@ -382,7 +414,7 @@ class _HomePageState extends State<HomePage> {
                                   width: 60 * SizeConfig.widthMultiplier,
                                   child: Wrap(
                                     children: [Text(widget.name, style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.red[300],
                                       fontFamily: "Brand Bold",
                                       fontSize: 3 * SizeConfig.textMultiplier,
                                       fontWeight: FontWeight.bold,
@@ -399,7 +431,7 @@ class _HomePageState extends State<HomePage> {
                                     ? "Good Evening!"
                                     : "Good Morning!",
                                 style: TextStyle(
-                                  color: Colors.white70,
+                                  color: Colors.red[200],
                                   fontSize: 2.2 * SizeConfig.textMultiplier,
                                 ),
                               ),
@@ -408,38 +440,6 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 9 * SizeConfig.heightMultiplier,
-                ),
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: 75 * SizeConfig.heightMultiplier,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(25),
-                    ),
-                  ),
-                  child: GoogleMap(
-                    padding: EdgeInsets.only(
-                      top: 1.3 * SizeConfig.heightMultiplier,
-                    ),
-                    mapType: MapType.normal,
-                    myLocationButtonEnabled: true,
-                    initialCameraPosition: HomePage._kGooglePlex,
-                    myLocationEnabled: true,
-                    zoomControlsEnabled: true,
-                    zoomGesturesEnabled: true,
-                    onMapCreated: (GoogleMapController controller) {
-                      _googleMapController.complete(controller);
-                      newGoogleMapController = controller;
-                      locatePosition();
-                    },
                   ),
                 ),
               ),
@@ -573,18 +573,81 @@ Future<dynamic> profilePicView({String imageUrl, BuildContext context, bool isSe
                 ),
               ),
               Spacer(),
-              Row(
-                children: <Widget>[
-                  Spacer(),
-                  Icon(Icons.message_rounded, color: Colors.red[300],),
-                  SizedBox(width: 13 * SizeConfig.widthMultiplier,),
-                  Icon(Icons.call_rounded, color: Colors.red[300],),
-                  SizedBox(width: 13 * SizeConfig.widthMultiplier,),
-                  Icon(Icons.videocam_rounded, color: Colors.red[300],),
-                  SizedBox(width: 13 * SizeConfig.widthMultiplier,),
-                  Icon(Icons.edit_rounded, color: Colors.red[300],),
-                  Spacer(),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4 * SizeConfig.widthMultiplier),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red[100],
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child:FocusedMenuHolder(
+                        blurSize: 0,
+                        duration: Duration(milliseconds: 500),
+                        menuWidth: MediaQuery.of(context).size.width * 0.3,
+                        menuItemExtent: 40,
+                        onPressed: () {
+                          displayToastMessage("Tap & Hold to make selection", context);
+                        },
+                        menuItems: <FocusedMenuItem>[
+                          FocusedMenuItem(title: Text("Gallery", style: TextStyle(
+                              color: Colors.red[300], fontWeight: FontWeight.w500),),
+                            onPressed: () async =>
+                            await Permissions.cameraAndMicrophonePermissionsGranted() ?
+                            pickImage(
+                                source: ImageSource.gallery,
+                                context: context,
+                                databaseMethods: databaseMethods).then((val) async{
+                              String profilePic = val;
+                                if (profilePic == null || profilePic == "") {} else {
+                                  await databaseMethods.updateDriverDocField({"profile_photo": profilePic}, currentDriver.uid);
+                                  Navigator.pop(context);
+                                  displaySnackBar(message: "Changes will be seen next time you open the app", label: "OK", context: context);
+                                }
+                            }) : {},
+                            trailingIcon: Icon(Icons.photo_library_outlined, color: Colors.red[300],),
+                          ),
+                          FocusedMenuItem(title: Text("Capture", style: TextStyle(
+                              color: Colors.red[300], fontWeight: FontWeight.w500),),
+                            onPressed: () async =>
+                            await Permissions.cameraAndMicrophonePermissionsGranted() ?
+                            pickImage(
+                                source: ImageSource.camera,
+                                context: context,
+                                databaseMethods: databaseMethods).then((val) async {
+                              String profilePic = val;
+                                if (profilePic == null || profilePic == "") {} else {
+                                  await databaseMethods.updateDriverDocField({"profile_photo": profilePic}, currentDriver.uid);
+                                  Navigator.pop(context);
+                                  displaySnackBar(message: "Changes will be seen next time you open the app", label: "OK", context: context);
+                                }
+                            }) : {},
+                            trailingIcon: Icon(Icons.camera, color: Colors.red[300],),
+                          ),
+                        ],
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(CupertinoIcons.pencil, color: Colors.red[300],),
+                              Text("Edit Profile Picture", style: TextStyle(
+                                fontFamily: "Brand Bold",
+                                color: Colors.red[300],
+                              ),),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Image(
+                      image: AssetImage("images/logo.png"),
+                      width: 12 * SizeConfig.widthMultiplier,
+                      height: 5 * SizeConfig.heightMultiplier,
+                    ),
+                  ],
+                ),
               ),
               Spacer(),
             ],

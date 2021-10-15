@@ -19,9 +19,16 @@ class PhotoViewPage extends StatelessWidget {
     String sender = chatRoomId.toString().replaceAll("_", "").replaceAll(myName, "");
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[300],
+        elevation: 0,
+        backgroundColor: Colors.grey[100],
         titleSpacing: 0,
-        title: isSender ? Text("You") : Text(chatRoomId != null ? sender : "Dr. "  + doctorsName),
+        title: isSender ? Text("You", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.red[300],
+        ),) : Text(chatRoomId != null ? sender : "Dr. "  + doctorsName, style: TextStyle(
+          fontFamily: "Brand Bold",
+          color: Colors.red[300]
+        ),),
       ),
       body: Container(
         decoration: BoxDecoration(
