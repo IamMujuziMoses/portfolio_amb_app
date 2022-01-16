@@ -1,12 +1,12 @@
-import 'package:creativedata_ambulance_app/AllScreens/aboutScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/helpScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/personalDetails.dart';
-import 'package:creativedata_ambulance_app/Widgets//cachedImage.dart';
-import 'package:creativedata_ambulance_app/Widgets/divider.dart';
-import 'package:creativedata_ambulance_app/Widgets/photoViewPage.dart';
-import 'package:creativedata_ambulance_app/main.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/AllScreens/aboutScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/helpScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/personalDetails.dart';
+import 'package:portfolio_amb_app/Widgets//cachedImage.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/Widgets/photoViewPage.dart';
+import 'package:portfolio_amb_app/main.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +94,7 @@ class _UserAccountState extends State<UserAccount> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     child: InkWell(
-                      splashColor: Colors.red[300],
+                      splashColor: Color(0xFFa81845).withOpacity(0.6),
                       highlightColor: Colors.grey.withOpacity(0.1),
                       radius: 800,
                       borderRadius: BorderRadius.circular(10),
@@ -129,7 +129,7 @@ class _UserAccountState extends State<UserAccount> {
                                     child: Wrap(
                                       children: <Widget>[
                                         Text(widget.name, style: TextStyle(
-                                        color: Colors.red[300],
+                                        color: Color(0xFFa81845),
                                         fontFamily: "Brand Bold",
                                         fontSize: 3 * SizeConfig.textMultiplier,
                                         fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class _UserAccountState extends State<UserAccount> {
                                 ),),
                                 child: Center(
                                   child: Icon(Icons.arrow_forward_ios_rounded,
-                                    color: Colors.red,
+                                    color: Color(0xFFa81845),
                                     size: 4 * SizeConfig.imageSizeMultiplier,
                                   ),
                                 ),
@@ -207,7 +207,7 @@ class _UserAccountState extends State<UserAccount> {
                       _tiles(
                         icon: CupertinoIcons.question_circle,
                         message: "Help",
-                        color: Colors.red[300],
+                        color: Color(0xFFa81845),
                         onTap: () => Navigator.push(
                           context, MaterialPageRoute(
                           builder: (context) => HelpScreen(),
@@ -219,7 +219,7 @@ class _UserAccountState extends State<UserAccount> {
                       _tiles(
                         icon: CupertinoIcons.info_circle,
                         message: "About",
-                        color: Colors.red[300],
+                        color: Color(0xFFa81845),
                         onTap: () => Navigator.push(
                           context, MaterialPageRoute(
                           builder: (context) => AboutScreen(),
@@ -231,7 +231,7 @@ class _UserAccountState extends State<UserAccount> {
                       _tiles(
                         icon: Icons.logout,
                         message: "Log out",
-                        color: Colors.red[300],
+                        color: Color(0xFFa81845),
                         onTap: () {
                           Geofire.removeLocation(currentDriver.uid);
                           FirebaseAuth.instance.signOut();
@@ -267,13 +267,13 @@ class _UserAccountState extends State<UserAccount> {
                             fontSize: 2 * SizeConfig.textMultiplier,
                             fontWeight: FontWeight.w500,
                             fontFamily: "Brand Bold",
-                            color: Colors.red[700],
+                            color: Color(0xFFa81845),
                           ),),
                           Text(" 1.0.0", style: TextStyle(
                             fontSize: 2 * SizeConfig.textMultiplier,
                             fontWeight: FontWeight.w400,
                             fontFamily: "Brand-Regular",
-                            color: Colors.red[900],
+                            color: Color(0xFFa81845).withOpacity(0.6),
                           ),),
                           Spacer(),
                         ],
@@ -292,7 +292,7 @@ class _UserAccountState extends State<UserAccount> {
     return Material(
       color: Colors.white,
       child: InkWell(
-        splashColor: Colors.red[300],
+        splashColor: Color(0xFFa81845).withOpacity(0.6),
         highlightColor: Colors.grey.withOpacity(0.1),
         radius: 800,
         borderRadius: BorderRadius.circular(10),
@@ -354,7 +354,7 @@ Widget custom({@required Widget body, String doctorsName, imageUrl, BuildContext
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(doctorsName, style: TextStyle(
-                color: Colors.red[300],
+                color: Color(0xFFa81845),
                 fontFamily: "Brand Bold",
                 fontSize: 2.5 * SizeConfig.textMultiplier,
               ),),

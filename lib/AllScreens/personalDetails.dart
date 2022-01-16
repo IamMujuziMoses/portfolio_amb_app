@@ -1,7 +1,7 @@
-import 'package:creativedata_ambulance_app/Provider/userProvider.dart';
-import 'package:creativedata_ambulance_app/Widgets/cachedImage.dart';
-import 'package:creativedata_ambulance_app/Widgets/divider.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Provider/userProvider.dart';
+import 'package:portfolio_amb_app/Widgets/cachedImage.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 /*
@@ -24,7 +24,7 @@ class PersonalDetails extends StatelessWidget {
           elevation: 0,
           title: Text("Personal Details", style: TextStyle(
             fontFamily: "Brand Bold",
-            color: Colors.red[300]
+            color: Color(0xFFa81845),
           ),),
           backgroundColor: Colors.grey[100],
         ),
@@ -42,7 +42,7 @@ class PersonalDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       color: Colors.white,
-                      border: Border.all(color: Colors.redAccent, style: BorderStyle.solid, width: 2),
+                      border: Border.all(color: Color(0xFFa81845), style: BorderStyle.solid, width: 2),
                     ),
                     child: userPic == null
                         ? Image.asset("images/user_icon.png")
@@ -124,11 +124,10 @@ class PersonalDetails extends StatelessWidget {
   Widget _tiles({String title, String message, Color color}) {
     return Container(
       height: 7 * SizeConfig.heightMultiplier,
-      width: 84 * SizeConfig.widthMultiplier,
       child: Column(
         children: <Widget>[
-          Spacer(),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(title, style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -138,8 +137,8 @@ class PersonalDetails extends StatelessWidget {
               Spacer(),
             ],
           ),
-          SizedBox(height: 1 * SizeConfig.heightMultiplier,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(message, style: TextStyle(
                 fontWeight: FontWeight.w300,

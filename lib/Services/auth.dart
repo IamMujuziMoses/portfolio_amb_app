@@ -1,6 +1,6 @@
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Widgets/progressDialog.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Widgets/progressDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 /*

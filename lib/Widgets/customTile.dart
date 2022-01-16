@@ -44,7 +44,7 @@ class CustomTile extends StatelessWidget {
                   border: Border(
                     bottom: BorderSide(
                       width: 1,
-                      color: Colors.redAccent,
+                      color: Color(0xFFa81845),
                     ),
                   ),
                 ),

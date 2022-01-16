@@ -1,10 +1,10 @@
-import 'package:creativedata_ambulance_app/AllScreens/historyPage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/homePage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/ratingsPage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/registerScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/userAccount.dart';
-import 'package:creativedata_ambulance_app/Widgets/customBottomNavBar.dart';
+import 'package:portfolio_amb_app/AllScreens/historyPage.dart';
+import 'package:portfolio_amb_app/AllScreens/homePage.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/ratingsPage.dart';
+import 'package:portfolio_amb_app/AllScreens/registerScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/userAccount.dart';
+import 'package:portfolio_amb_app/Widgets/customBottomNavBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 /*

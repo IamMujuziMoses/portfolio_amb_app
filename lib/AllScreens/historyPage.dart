@@ -1,7 +1,8 @@
-import 'package:creativedata_ambulance_app/Assistants/assistantMethods.dart';
-import 'package:creativedata_ambulance_app/Models/history.dart';
-import 'package:creativedata_ambulance_app/Provider/appData.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Assistants/assistantMethods.dart';
+import 'package:portfolio_amb_app/Models/history.dart';
+import 'package:portfolio_amb_app/Provider/appData.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class _HistoryPageState extends State<HistoryPage> {
         backgroundColor: Colors.grey[100],
         title: Text("Trips History", style: TextStyle(
           fontFamily: "Brand Bold",
-          color: Colors.red[300]
+          color: Color(0xFFa81845),
         ),),
       ),
       body: Container(
@@ -41,7 +42,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 history: Provider.of<AppData>(context, listen: false).tripHistoryDataList[index],
               );
             },
-            separatorBuilder: (context, int index) => Divider(thickness: 3,),
+            separatorBuilder: (context, int index) => DividerWidget(),
             itemCount: Provider.of<AppData>(context, listen: false).tripHistoryDataList.length,
             physics: ClampingScrollPhysics(),
             shrinkWrap: true,
@@ -71,7 +72,7 @@ class HistoryItem extends StatelessWidget {
                   child: Container(
                     child: Text(history.riderName, style: TextStyle(
                       fontSize: 2.5 * SizeConfig.textMultiplier,
-                      color: Colors.red[300],
+                      color: Color(0xFFa81845),
                       fontFamily: "Brand Bold",
                       fontWeight: FontWeight.w400,
                     ), overflow: TextOverflow.ellipsis,),

@@ -1,20 +1,21 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:creativedata_ambulance_app/AllScreens/aboutScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/helpScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/personalDetails.dart';
-import 'package:creativedata_ambulance_app/AllScreens/registerScreen.dart';
-import 'package:creativedata_ambulance_app/Models/directionDetails.dart';
-import 'package:creativedata_ambulance_app/Notifications/pushNotificationService.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Utilities/permissions.dart';
-import 'package:creativedata_ambulance_app/Widgets/cachedImage.dart';
-import 'package:creativedata_ambulance_app/Widgets/divider.dart';
-import 'package:creativedata_ambulance_app/Widgets/photoViewPage.dart';
-import 'package:creativedata_ambulance_app/configMaps.dart';
-import 'package:creativedata_ambulance_app/main.dart';
+import 'package:portfolio_amb_app/AllScreens/aboutScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/helpScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/personalDetails.dart';
+import 'package:portfolio_amb_app/AllScreens/registerScreen.dart';
+import 'package:portfolio_amb_app/Models/directionDetails.dart';
+import 'package:portfolio_amb_app/Notifications/pushNotificationService.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Utilities/permissions.dart';
+import 'package:portfolio_amb_app/Widgets/cachedImage.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/Widgets/photoViewPage.dart';
+import 'package:portfolio_amb_app/configMaps.dart';
+import 'package:portfolio_amb_app/constants.dart';
+import 'package:portfolio_amb_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,6 @@ class _HomePageState extends State<HomePage> {
 
   Completer<GoogleMapController> _googleMapController = Completer();
   GoogleMapController newGoogleMapController;
-  DatabaseMethods databaseMethods = DatabaseMethods();
 
   DirectionDetails tripDirectionDetails;
   String driverStatus = "Offline now, Go Live";
@@ -152,12 +152,22 @@ class _HomePageState extends State<HomePage> {
           ),
           FlatButton(
             child: Text("Yes"),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () {
+              if (isDriverAvailable == true) {
+                makeDriverOfflineNow();
+                setState(() {
+                  leftRightPadding = 20 * SizeConfig.widthMultiplier;
+                  driverStatusColor = Colors.green[300];
+                  driverStatus = "Offline now, Go Live";
+                  isDriverAvailable = false;
+                });
+              }
+              Navigator.pop(context, true);
+            },
           ),
         ],
       ),
     );
-
   }
 
   @override
@@ -171,17 +181,19 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.grey[100],
           title: Text("Siro Ambulance", style: TextStyle(
             fontFamily: "Brand Bold",
-            color: Colors.red[300]
+            color: Color(0xFFa81845)
           ),),
         ),
         drawer: Container(
-          color: Colors.white,
           width: 65 * SizeConfig.widthMultiplier,
           child: Drawer(
+            elevation: 0,
             child: ListView(
               children: <Widget>[
                 DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.grey[100]),
+                  decoration: BoxDecoration(
+                    gradient: kPrimaryGradientColor,
+                  ),
                   child: Row(
                     children: <Widget>[
                       CachedImage(
@@ -206,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Text(widget.name, style: TextStyle(
                                     fontSize: 2.3 * SizeConfig.textMultiplier,
                                     fontFamily: "Brand Bold",
-                                    color: Colors.red[300],
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ), overflow: TextOverflow.ellipsis,),
                                 ),
@@ -219,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 2 * SizeConfig.heightMultiplier,
                                   width: 36 * SizeConfig.widthMultiplier,
                                   child: Text(widget.email, style: TextStyle(
-                                    color: Colors.red[200],
+                                    color: Colors.white60,
                                     fontWeight: FontWeight.w500,
                                     fontFamily: "Brand-Regular",
                                     fontSize: 1.5 * SizeConfig.textMultiplier,
@@ -249,16 +261,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),),
                   child: ListTile(
-                    hoverColor: Colors.red[300],
                     leading: Container(
                       height: 5 * SizeConfig.heightMultiplier,
                       width: 10 * SizeConfig.widthMultiplier,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        gradient: kPrimaryGradientColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
-                        child: Icon(CupertinoIcons.person_alt),
+                        child: Icon(CupertinoIcons.person_alt,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     title: Text("Profile", style: TextStyle(
@@ -273,16 +286,17 @@ class _HomePageState extends State<HomePage> {
                 builder: (context) => HelpScreen(),
                 ),),
                   child: ListTile(
-                    hoverColor: Colors.red[300],
                     leading: Container(
                       height: 5 * SizeConfig.heightMultiplier,
                       width: 10 * SizeConfig.widthMultiplier,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        gradient: kPrimaryGradientColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
-                        child: Icon(CupertinoIcons.question_circle_fill),
+                        child: Icon(CupertinoIcons.question_circle_fill,
+                          color: Colors.white,
+                        ),
                       ),),
                     title: Text("Help", style: TextStyle(
                       fontSize: 15.0,
@@ -296,16 +310,16 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => AboutScreen(),
                   ),),
                   child: ListTile(
-                    hoverColor: Colors.red[300],
                     leading: Container(
                       height: 5 * SizeConfig.heightMultiplier,
                       width: 10 * SizeConfig.widthMultiplier,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        gradient: kPrimaryGradientColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
                         child: Icon(Icons.info,
+                          color: Colors.white,
                         ),
                       ),),
                     title: Text("About", style: TextStyle(
@@ -323,22 +337,22 @@ class _HomePageState extends State<HomePage> {
                     ));
                   },
                   child: ListTile(
-                    hoverColor: Colors.red[300],
                     leading: Container(
                       height: 5 * SizeConfig.heightMultiplier,
                       width: 10 * SizeConfig.widthMultiplier,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        gradient: kPrimaryGradientColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
                         child: Icon(Icons.logout,
+                          color: Colors.white,
                         ),
                       ),),
                     title: Text("Log Out", style: TextStyle(
                       fontSize: 15.0,
-                      color: Colors.red[300],
-                      fontFamily: "Brand-Regular"
+                      color: Color(0xFFa81845),
+                      fontFamily: "Brand Bold"
                     ),),
                   ),
                 ),
@@ -414,7 +428,7 @@ class _HomePageState extends State<HomePage> {
                                   width: 60 * SizeConfig.widthMultiplier,
                                   child: Wrap(
                                     children: [Text(widget.name, style: TextStyle(
-                                      color: Colors.red[300],
+                                      color: Color(0xFFa81845),
                                       fontFamily: "Brand Bold",
                                       fontSize: 3 * SizeConfig.textMultiplier,
                                       fontWeight: FontWeight.bold,
@@ -431,7 +445,7 @@ class _HomePageState extends State<HomePage> {
                                     ? "Good Evening!"
                                     : "Good Morning!",
                                 style: TextStyle(
-                                  color: Colors.red[200],
+                                  color: Color(0xFFa81845).withOpacity(0.6),
                                   fontSize: 2.2 * SizeConfig.textMultiplier,
                                 ),
                               ),
@@ -454,13 +468,16 @@ class _HomePageState extends State<HomePage> {
                     vertical: 2 * SizeConfig.widthMultiplier,
                   ),
                   child: RaisedButton(
+                    clipBehavior: Clip.hardEdge,
+                    padding: EdgeInsets.zero,
+                    elevation: 10,
                     onPressed: () {
                       if (isDriverAvailable != true) {
                         makeDriverOnlineNow();
                         getLocationLiveUpdates();
                         setState(() {
                           leftRightPadding = 30 * SizeConfig.widthMultiplier;
-                          driverStatusColor = Colors.red[300];
+                          driverStatusColor = Color(0xFFa81845);
                           driverStatus = "Online Now";
                           isDriverAvailable = true;
                         });
@@ -580,7 +597,7 @@ Future<dynamic> profilePicView({String imageUrl, BuildContext context, bool isSe
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.red[100],
+                        gradient: kPrimaryGradientColor,
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child:FocusedMenuHolder(
@@ -593,7 +610,7 @@ Future<dynamic> profilePicView({String imageUrl, BuildContext context, bool isSe
                         },
                         menuItems: <FocusedMenuItem>[
                           FocusedMenuItem(title: Text("Gallery", style: TextStyle(
-                              color: Colors.red[300], fontWeight: FontWeight.w500),),
+                              color: Color(0xFFa81845), fontWeight: FontWeight.w500),),
                             onPressed: () async =>
                             await Permissions.cameraAndMicrophonePermissionsGranted() ?
                             pickImage(
@@ -607,10 +624,10 @@ Future<dynamic> profilePicView({String imageUrl, BuildContext context, bool isSe
                                   displaySnackBar(message: "Changes will be seen next time you open the app", label: "OK", context: context);
                                 }
                             }) : {},
-                            trailingIcon: Icon(Icons.photo_library_outlined, color: Colors.red[300],),
+                            trailingIcon: Icon(Icons.photo_library_outlined, color: Color(0xFFa81845),),
                           ),
                           FocusedMenuItem(title: Text("Capture", style: TextStyle(
-                              color: Colors.red[300], fontWeight: FontWeight.w500),),
+                              color: Color(0xFFa81845), fontWeight: FontWeight.w500),),
                             onPressed: () async =>
                             await Permissions.cameraAndMicrophonePermissionsGranted() ?
                             pickImage(
@@ -624,17 +641,17 @@ Future<dynamic> profilePicView({String imageUrl, BuildContext context, bool isSe
                                   displaySnackBar(message: "Changes will be seen next time you open the app", label: "OK", context: context);
                                 }
                             }) : {},
-                            trailingIcon: Icon(Icons.camera, color: Colors.red[300],),
+                            trailingIcon: Icon(Icons.camera, color: Color(0xFFa81845),),
                           ),
                         ],
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                           child: Row(
                             children: <Widget>[
-                              Icon(CupertinoIcons.pencil, color: Colors.red[300],),
+                              Icon(CupertinoIcons.pencil, color: Colors.white,),
                               Text("Edit Profile Picture", style: TextStyle(
                                 fontFamily: "Brand Bold",
-                                color: Colors.red[300],
+                                color: Colors.white,
                               ),),
                             ],
                           ),

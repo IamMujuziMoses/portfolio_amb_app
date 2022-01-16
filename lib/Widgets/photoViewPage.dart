@@ -1,4 +1,4 @@
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 /*
@@ -24,10 +24,10 @@ class PhotoViewPage extends StatelessWidget {
         titleSpacing: 0,
         title: isSender ? Text("You", style: TextStyle(
             fontFamily: "Brand Bold",
-            color: Colors.red[300],
+            color: Color(0xFFa81845),
         ),) : Text(chatRoomId != null ? sender : "Dr. "  + doctorsName, style: TextStyle(
           fontFamily: "Brand Bold",
-          color: Colors.red[300]
+          color: Color(0xFFa81845)
         ),),
       ),
       body: Container(
@@ -47,6 +47,7 @@ class PhotoViewPage extends StatelessWidget {
                value: event == null
                    ? 0
                    : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFa81845)),
             ),
           ),
         ) : Container(

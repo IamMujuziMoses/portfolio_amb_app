@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/Provider/appData.dart';
-import 'package:creativedata_ambulance_app/Provider/userProvider.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Widgets/customBottomNavBar.dart';
-import 'package:creativedata_ambulance_app/routes.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/Provider/appData.dart';
+import 'package:portfolio_amb_app/Provider/userProvider.dart';
+import 'package:portfolio_amb_app/Services/auth.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Widgets/customBottomNavBar.dart';
+import 'package:portfolio_amb_app/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 /*
 * Created by Mujuzi Moses
@@ -32,6 +33,7 @@ class MyApp extends StatefulWidget {
 AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
 Position currentPosition;
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+AuthMethods authMethods = new AuthMethods();
 User currentDriver = firebaseAuth.currentUser;
 DatabaseMethods databaseMethods = DatabaseMethods();
 StreamSubscription<Position> homePageStreamSubscription;
@@ -54,16 +56,20 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppData>(create: (context) => AppData(),),
         ChangeNotifierProvider<UserProvider>(create: (context) => UserProvider(),),
       ],
-      child: new MaterialApp(
-        title: "Siro Ambulance App",
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.grey,
-          primaryIconTheme: IconThemeData(color: Colors.red[300]),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+      child: OverlaySupport.global(
+        child: new MaterialApp(
+          title: "Siro Ambulance App",
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+
+            canvasColor: Colors.grey[100],
+            primarySwatch: Colors.grey,
+            primaryIconTheme: IconThemeData(color: Color(0xFFa81845)),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: firebaseAuth.currentUser  == null ? LoginScreen() : CustomBottomNavBar(),
+          routes: routes,
         ),
-        home: firebaseAuth.currentUser  == null ? LoginScreen() : CustomBottomNavBar(),
-        routes: routes,
       ),
     );
   }

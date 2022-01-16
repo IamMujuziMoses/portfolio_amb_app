@@ -1,7 +1,7 @@
-import 'package:creativedata_ambulance_app/Provider/userProvider.dart';
-import 'package:creativedata_ambulance_app/Widgets/divider.dart';
-import 'package:creativedata_ambulance_app/configMaps.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Provider/userProvider.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/configMaps.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -26,7 +26,7 @@ class _RatingsPageState extends State<RatingsPage> {
         elevation: 0,
         title: Text("Ratings", style: TextStyle(
           fontFamily: "Brand Bold",
-          color: Colors.red[300]
+          color: Color(0xFFa81845)
         ),),
         backgroundColor: Colors.grey[100],
       ),
@@ -42,7 +42,7 @@ class _RatingsPageState extends State<RatingsPage> {
                 fontSize: 3.5 * SizeConfig.textMultiplier,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Brand Bold",
-                color: Colors.red[300],
+                color: Color(0xFFa81845)
               ),),
               SizedBox(height: 3 * SizeConfig.widthMultiplier,),
               Container(
@@ -75,7 +75,7 @@ class _RatingsPageState extends State<RatingsPage> {
                       SmoothStarRating(
                         isReadOnly: true,
                         rating: starCounter,
-                        color: Colors.red[300],
+                        color: Color(0xFFa81845),
                         allowHalfRating: true,
                         starCount: 5,
                         size: 8 * SizeConfig.imageSizeMultiplier,

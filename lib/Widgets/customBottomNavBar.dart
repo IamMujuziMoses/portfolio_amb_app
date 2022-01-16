@@ -1,16 +1,19 @@
-import 'package:creativedata_ambulance_app/AllScreens/historyPage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/homePage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/ratingsPage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/userAccount.dart';
-import 'package:creativedata_ambulance_app/Assistants/assistantMethods.dart';
-import 'package:creativedata_ambulance_app/Provider/userProvider.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/constants.dart';
-import 'package:creativedata_ambulance_app/main.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'dart:async';
+
+import 'package:portfolio_amb_app/AllScreens/historyPage.dart';
+import 'package:portfolio_amb_app/AllScreens/homePage.dart';
+import 'package:portfolio_amb_app/AllScreens/ratingsPage.dart';
+import 'package:portfolio_amb_app/AllScreens/userAccount.dart';
+import 'package:portfolio_amb_app/Assistants/assistantMethods.dart';
+import 'package:portfolio_amb_app/Provider/userProvider.dart';
+import 'package:portfolio_amb_app/constants.dart';
+import 'package:portfolio_amb_app/main.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 /*
 * Created by Mujuzi Moses
@@ -28,17 +31,47 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   int _currentIndex = 0;
   UserProvider userProvider;
-  DatabaseMethods databaseMethods = DatabaseMethods();
   String name = "";
   String phone = "";
   String userPic = "";
   String email = "";
   String hospital = "";
+  StreamSubscription subscription;
 
   @override
   void initState() {
     getUserInfo();
     super.initState();
+
+    subscription = InternetConnectionChecker().onStatusChange.listen((status) {
+      bool hasInternet = status == InternetConnectionStatus.connected;
+
+      if (hasInternet == true) {
+        showSimpleNotification(
+          Text("Connected", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.white,
+          ),),
+          background: Color(0xFFa81845),
+          elevation: 0,
+        );
+      } else {
+        showSimpleNotification(
+          Text("No Internet Connection", style: TextStyle(
+            fontFamily: "Brand Bold",
+            color: Colors.white,
+          ),),
+          background: Color(0xFFa81845),
+          elevation: 0,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   void getUserInfo() async {
@@ -91,7 +124,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   Widget bottomNavBar({List<Widget> child, int index}) {
     return Scaffold(
-        body: child[index],
+        body: IndexedStack(
+          children: child,
+          index: index,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.grey[100],
@@ -103,26 +139,26 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             fontFamily: "Brand Bold",
             fontWeight: FontWeight.w500,
           ),
-          selectedItemColor: Colors.red[300],
+          selectedItemColor: Color(0xFFa81845),
           currentIndex: index,
-          items: [
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.house, color: Colors.red[300],),
+              icon: Icon(CupertinoIcons.house, color: Color(0xFFa81845),),
               label: "Home",
               activeIcon: selectedIcon(CupertinoIcons.house_fill),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history, color: Colors.red[300],),
+              icon: Icon(Icons.history, color: Color(0xFFa81845),),
               label: "History",
               activeIcon: selectedIcon(Icons.history),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.star, color: Colors.red[300]),
+              icon: Icon(CupertinoIcons.star, color: Color(0xFFa81845)),
               label: "Ratings",
               activeIcon: selectedIcon(CupertinoIcons.star_fill),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_circle, color: Colors.red[300]),
+              icon: Icon(CupertinoIcons.person_circle, color: Color(0xFFa81845)),
               label: "Profile",
               activeIcon: selectedIcon(CupertinoIcons.person_circle_fill),
             ),
@@ -136,7 +172,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       height: 3.5 * SizeConfig.heightMultiplier,
       width: 28 * SizeConfig.widthMultiplier,
       decoration: BoxDecoration(
-        color: Colors.red[300],
+        gradient: kPrimaryGradientColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(

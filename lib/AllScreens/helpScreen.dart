@@ -1,5 +1,5 @@
-import 'package:creativedata_ambulance_app/Widgets/divider.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Widgets/divider.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 /*
@@ -18,7 +18,7 @@ class HelpScreen extends StatelessWidget {
           elevation: 0,
           title: Text("Help", style: TextStyle(
             fontFamily: "Brand Bold",
-            color: Colors.red[300]
+            color: Color(0xFFa81845)
           ),),
           backgroundColor: Colors.grey[100],
         ),
@@ -65,7 +65,7 @@ class HelpScreen extends StatelessWidget {
                             onTap: () {},
                             icon: CupertinoIcons.phone_circle,
                             message: "Call Help Line",
-                            color: Colors.red[300]
+                            color: Color(0xFFa81845)
                         ),
                         SizedBox(height: 1 * SizeConfig.heightMultiplier,),
                         DividerWidget(),
@@ -74,7 +74,7 @@ class HelpScreen extends StatelessWidget {
                             onTap: () {},
                             icon: CupertinoIcons.exclamationmark_triangle,
                             message: "Report a Problem",
-                            color: Colors.red[300]
+                            color: Color(0xFFa81845)
                         ),
                         SizedBox(height: 1 * SizeConfig.heightMultiplier,),
                         DividerWidget(),
@@ -83,7 +83,7 @@ class HelpScreen extends StatelessWidget {
                             onTap: () {},
                             icon: CupertinoIcons.ellipses_bubble,
                             message: "Send Feedback",
-                            color: Colors.red[300]
+                            color: Color(0xFFa81845)
                         ),
                       ],
                     ),
@@ -100,7 +100,7 @@ class HelpScreen extends StatelessWidget {
     return Material(
       color: Colors.white,
       child: InkWell(
-        splashColor: Colors.red[200],
+        splashColor: Color(0xFFa81845).withOpacity(0.6),
         highlightColor: Colors.grey.withOpacity(0.1),
         radius: 800,
         borderRadius: BorderRadius.circular(10),

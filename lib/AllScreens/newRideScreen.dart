@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:creativedata_ambulance_app/Assistants/assistantMethods.dart';
-import 'package:creativedata_ambulance_app/Assistants/mapKitAssistant.dart';
-import 'package:creativedata_ambulance_app/Models/rideRequest.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Widgets/progressDialog.dart';
-import 'package:creativedata_ambulance_app/Widgets/tripEndedDialog.dart';
-import 'package:creativedata_ambulance_app/main.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Assistants/assistantMethods.dart';
+import 'package:portfolio_amb_app/Assistants/mapKitAssistant.dart';
+import 'package:portfolio_amb_app/Models/rideRequest.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Widgets/progressDialog.dart';
+import 'package:portfolio_amb_app/Widgets/tripEndedDialog.dart';
+import 'package:portfolio_amb_app/constants.dart';
+import 'package:portfolio_amb_app/main.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -54,7 +55,7 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
   String durationRide = "";
   bool isRequestingDirection = false;
   String btnTitle = "Arrived";
-  Color btnColor = Colors.red[300];
+  Color btnColor = Color(0xFFa81845);
   Timer timer;
   int durationCounter = 0;
 
@@ -120,8 +121,11 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        backgroundColor: Colors.red[300],
-        title: Text("New Ride", style: TextStyle(fontFamily: "Brand Bold"),),
+        backgroundColor: Colors.grey[100],
+        title: Text("New Ride", style: TextStyle(
+          color: Color(0xFFa81845),
+          fontFamily: "Brand Bold",
+        ),),
       ),
       body: Stack(
         children: <Widget>[
@@ -170,7 +174,7 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
                           borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.red[300],
+                              color: Color(0xFFa81845),
                               blurRadius: 16.0,
                               spreadRadius: 0.5,
                               offset: Offset(0.7, 0.7),
@@ -184,7 +188,7 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
                               Text(durationRide, style: TextStyle(
                                 fontSize: 2 * SizeConfig.textMultiplier,
                                 fontFamily: "Band Bold",
-                                color:  Colors.red[300],
+                                color:  Color(0xFFa81845),
                               ),),
                               SizedBox(height: 1 * SizeConfig.heightMultiplier,),
                               Padding(
@@ -276,7 +280,7 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
                                             Expanded(
                                               child: Container(
                                                 child: Text(widget.rideDetails.dropOffAddress, style: TextStyle(
-                                                  fontSize: 2.5 * SizeConfig.textMultiplier,
+                                                  fontSize: 2 * SizeConfig.textMultiplier,
                                                 ),overflow: TextOverflow.ellipsis,),
                                               ),
                                             )
@@ -291,9 +295,10 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16),
                                 child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  padding: EdgeInsets.zero,
+                                  elevation: 8,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
                                   onPressed: () async {
                                     if (status == "accepted") {
                                       status = "arrived";
@@ -321,29 +326,43 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
 
                                       setState(() {
                                         btnTitle = "End Trip";
-                                        btnColor = Colors.red[300];
                                       });
                                       initTimer();
                                     } else if (status == "enRoute") {
                                       endTrip();
                                     }
                                   },
-                                  color: btnColor,
+                                  color: status == "arrived" ? btnColor : null,
                                   textColor: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(17.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(btnTitle.toUpperCase(), style: TextStyle(
-                                          fontSize: 2.2 * SizeConfig.textMultiplier,
-                                          color: Colors.white
-                                        ),),
-                                        Icon(FontAwesomeIcons.ambulance,
-                                          color: Colors.white,
-                                          size: 6 * SizeConfig.imageSizeMultiplier,
-                                        ),
-                                      ],
+                                  child: Container(
+                                    width: 100 * SizeConfig.widthMultiplier,
+                                    height: 6 * SizeConfig.heightMultiplier,
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black54,
+                                            blurRadius: 6.0,
+                                            spreadRadius: 0.5,
+                                            offset: Offset(0.7, 0.7),
+                                          ),
+                                        ],
+                                        gradient: kPrimaryGradientColor,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(17.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(btnTitle.toUpperCase(), style: TextStyle(
+                                            fontSize: 2.2 * SizeConfig.textMultiplier,
+                                            color: Colors.white
+                                          ),),
+                                          Icon(FontAwesomeIcons.ambulance,
+                                            color: Colors.white,
+                                            size: 6 * SizeConfig.imageSizeMultiplier,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -385,7 +404,7 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
 
     setState(() {
       Polyline polyline = Polyline(
-        color: Colors.red[300],
+        color: Color(0xFFa81845),
         polylineId: PolylineId("PolylineId"),
         jointType: JointType.round,
         points: polyLineCoordinates,
@@ -446,11 +465,11 @@ class _NewRideScreenState extends State<NewRideScreen> with TickerProviderStateM
     });
 
     Circle pickUpLocCircle = Circle(
-      fillColor: Colors.red,
+      fillColor: Color(0xFFa81845),
       center: pickUpLatLng,
       radius: 5,
       strokeWidth: 2,
-      strokeColor: Colors.red[300],
+      strokeColor: Color(0xFFa81845).withOpacity(0.6),
       circleId: CircleId("pickUpId"),
     );
 

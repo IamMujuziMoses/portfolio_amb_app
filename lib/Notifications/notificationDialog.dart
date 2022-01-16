@@ -1,11 +1,11 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/newRideScreen.dart';
-import 'package:creativedata_ambulance_app/Assistants/assistantMethods.dart';
-import 'package:creativedata_ambulance_app/Models/rideRequest.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/main.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/newRideScreen.dart';
+import 'package:portfolio_amb_app/Assistants/assistantMethods.dart';
+import 'package:portfolio_amb_app/Models/rideRequest.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/main.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 /*
@@ -42,7 +42,7 @@ class NotificationDialog extends StatelessWidget {
               Text("New Ambulance Request", style: TextStyle(
                 fontFamily: "Brand Bold",
                 fontSize: 3 * SizeConfig.textMultiplier,
-                color: Colors.red[300],
+                color: Color(0xFFa81845),
                 fontWeight: FontWeight.bold,
               ),),
               SizedBox(height: 2 * SizeConfig.heightMultiplier,),
@@ -98,10 +98,10 @@ class NotificationDialog extends StatelessWidget {
                     FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(color: Colors.red[300]),
+                        side: BorderSide(color: Color(0xFFa81845)),
                       ),
                       color: Colors.white,
-                      textColor: Colors.red[300],
+                      textColor: Color(0xFFa81845),
                       padding: EdgeInsets.all(8.0),
                       onPressed: () {
                         assetsAudioPlayer.stop();

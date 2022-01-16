@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:creativedata_ambulance_app/Models/rideRequest.dart';
-import 'package:creativedata_ambulance_app/Models/user.dart' as myUser;
+import 'package:portfolio_amb_app/Models/rideRequest.dart';
+import 'package:portfolio_amb_app/Models/user.dart' as myUser;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 /*

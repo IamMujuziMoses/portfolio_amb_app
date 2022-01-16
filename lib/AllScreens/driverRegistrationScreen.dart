@@ -1,16 +1,17 @@
 import 'dart:io';
 
-import 'package:creativedata_ambulance_app/Widgets/cachedImage.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/registerScreen.dart';
-import 'package:creativedata_ambulance_app/Services/auth.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Services/helperFunctions.dart';
-import 'package:creativedata_ambulance_app/Utilities/permissions.dart';
-import 'package:creativedata_ambulance_app/Utilities/utils.dart';
-import 'package:creativedata_ambulance_app/Widgets/customBottomNavBar.dart';
-import 'package:creativedata_ambulance_app/Widgets/progressDialog.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/Widgets/cachedImage.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/registerScreen.dart';
+import 'package:portfolio_amb_app/Services/auth.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Services/helperFunctions.dart';
+import 'package:portfolio_amb_app/Utilities/permissions.dart';
+import 'package:portfolio_amb_app/Utilities/utils.dart';
+import 'package:portfolio_amb_app/Widgets/customBottomNavBar.dart';
+import 'package:portfolio_amb_app/Widgets/progressDialog.dart';
+import 'package:portfolio_amb_app/constants.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -54,7 +55,10 @@ class _DriverRegistrationState extends State<DriverRegistration> {
       appBar: AppBar(
         backgroundColor: Colors.red[300],
         titleSpacing: 0,
-        title: Text("Driver's Registration"),
+        title: Text("Driver's Registration", style: TextStyle(
+          fontFamily: "Brand Bold",
+          color: Color(0xFFa81845),
+        ),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -83,7 +87,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: Colors.white,
-                          border: Border.all(color: Colors.red[300], style: BorderStyle.solid, width: 2),
+                          border: Border.all(color: Color(0xFFa81845), style: BorderStyle.solid, width: 2),
                         ),
                         child: profilePhoto == null
                             ? Image.asset("images/user_icon.png")
@@ -123,7 +127,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               },
                               menuItems: <FocusedMenuItem>[
                                 FocusedMenuItem(title: Text("Gallery", style: TextStyle(
-                                    color: Colors.red[300], fontWeight: FontWeight.w500),),
+                                    color: Color(0xFFa81845), fontWeight: FontWeight.w500),),
                                   onPressed: () async =>
                                   await Permissions.cameraAndMicrophonePermissionsGranted() ?
                                   pickImage(
@@ -134,10 +138,10 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                       profilePhoto = val;
                                     });
                                   }) : {},
-                                  trailingIcon: Icon(Icons.photo_library_outlined, color: Colors.red[300],),
+                                  trailingIcon: Icon(Icons.photo_library_outlined, color: Color(0xFFa81845),),
                                 ),
                                 FocusedMenuItem(title: Text("Capture", style: TextStyle(
-                                    color: Colors.red[300], fontWeight: FontWeight.w500),),
+                                    color: Color(0xFFa81845), fontWeight: FontWeight.w500),),
                                   onPressed: () async =>
                                   await Permissions.cameraAndMicrophonePermissionsGranted() ?
                                   pickImage(
@@ -148,10 +152,10 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                       profilePhoto = val;
                                     });
                                   }) : {},
-                                  trailingIcon: Icon(Icons.camera, color: Colors.red[300],),
+                                  trailingIcon: Icon(Icons.camera, color: Color(0xFFa81845),),
                                 ),
                               ],
-                              child: Icon(Icons.camera_alt_outlined, color: Colors.red[300],),
+                              child: Icon(Icons.camera_alt_outlined, color: Color(0xFFa81845),),
                             ),
                           ),
                         ],
@@ -200,11 +204,16 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                     _yearsList,
                     SizedBox(height: 2.5 * SizeConfig.heightMultiplier,),
                     RaisedButton(
-                      color: Colors.red[300],
+                      clipBehavior: Clip.hardEdge,
+                      padding: EdgeInsets.zero,
+                      elevation: 8,
                       textColor: Colors.white,
                       child: Container(
                         height: 6.5 * SizeConfig.heightMultiplier,
-                        width: 30 * SizeConfig.widthMultiplier,
+                        width: 100 * SizeConfig.widthMultiplier,
+                        decoration: BoxDecoration(
+                          gradient: kPrimaryGradientColor,
+                        ),
                         child: Center(
                           child: Text("Submit", style: TextStyle(
                             fontSize: 2.5 * SizeConfig.textMultiplier,

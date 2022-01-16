@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:creativedata_ambulance_app/AllScreens/driverRegistrationScreen.dart';
-import 'package:creativedata_ambulance_app/AllScreens/loginScreen.dart';
-import 'package:creativedata_ambulance_app/Services/auth.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/Services/helperFunctions.dart';
-import 'package:creativedata_ambulance_app/Utilities/utils.dart';
-import 'package:creativedata_ambulance_app/sizeConfig.dart';
+import 'package:portfolio_amb_app/AllScreens/driverRegistrationScreen.dart';
+import 'package:portfolio_amb_app/AllScreens/loginScreen.dart';
+import 'package:portfolio_amb_app/Services/auth.dart';
+import 'package:portfolio_amb_app/Services/database.dart';
+import 'package:portfolio_amb_app/Services/helperFunctions.dart';
+import 'package:portfolio_amb_app/Utilities/utils.dart';
+import 'package:portfolio_amb_app/constants.dart';
+import 'package:portfolio_amb_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 /*
 * Created by Mujuzi Moses
 */
@@ -52,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Text("Ambulance", style: TextStyle(
                   fontSize: 3.5 * SizeConfig.textMultiplier,
                   fontFamily: "Brand Bold",
-                  color: Colors.red[300]
+                  color: Color(0xFFa81845),
               ),
                 textAlign: TextAlign.center,
               ),
@@ -156,22 +158,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 10.0,),
                     RaisedButton(
-                      color: Colors.red[300],
+                      clipBehavior: Clip.hardEdge,
+                      padding: EdgeInsets.zero,
+                      elevation: 8,
                       textColor: Colors.white,
                       child: Container(
                         height: 6.5 * SizeConfig.heightMultiplier,
+                        width: 100 * SizeConfig.widthMultiplier,
+                        decoration: BoxDecoration(
+                          gradient: kPrimaryGradientColor
+                        ),
                         child: Center(
-                          child: Text(
-                            "Create Account",
-                            style: TextStyle(
-                                fontSize: 2.5 * SizeConfig.textMultiplier, fontFamily: "Brand Bold"),
-                          ),
+                          child: Text("Create Account", style: TextStyle(
+                                fontSize: 2.5 * SizeConfig.textMultiplier, fontFamily: "Brand Bold",
+                          ),),
                         ),
                       ),
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(24.0),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        bool hasInternet = await InternetConnectionChecker().hasConnection;
+                        if (hasInternet == true) {} else {
+                          displayToastMessage("No internet Connection", context);
+                          return;
+                        }
                         if (nameTEC.text.length <= 4) {
                           displayToastMessage("Name must be at least 4 characters ", context);
                         } else if (!emailTEC.text.contains("@")) {
@@ -215,10 +226,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(context, LoginScreen.screenId, (route) => false);
                 },
-                child: Text(
-                  "Already have an Account? Login Here",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
+                child: Text("Already have an Account? Login Here",
+                  style: TextStyle(
+                    color: Color(0xFFa81845),
+                    decoration: TextDecoration.underline,
+                  ),),
               ),
             ],
           ),
@@ -250,7 +262,7 @@ class _DropDownListState extends State<DropDownList> {
         dropdownColor: Colors.white,
         icon: Icon(
           Icons.keyboard_arrow_down_rounded,
-          color: Colors.red[300],
+          color: Color(0xFFa81845),
         ),
         iconSize: 8 * SizeConfig.imageSizeMultiplier,
         isExpanded: true,

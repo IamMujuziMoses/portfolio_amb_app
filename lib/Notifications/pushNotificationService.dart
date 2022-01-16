@@ -1,9 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:creativedata_ambulance_app/Models/rideRequest.dart';
-import 'package:creativedata_ambulance_app/Notifications/notificationDialog.dart';
-import 'package:creativedata_ambulance_app/Services/database.dart';
-import 'package:creativedata_ambulance_app/main.dart';
+import 'package:portfolio_amb_app/Models/rideRequest.dart';
+import 'package:portfolio_amb_app/Notifications/notificationDialog.dart';
+import 'package:portfolio_amb_app/main.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -16,7 +15,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class PushNotificationService{
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  DatabaseMethods databaseMethods = DatabaseMethods();
 
   Future initialize(BuildContext context) async {
 
@@ -35,12 +33,7 @@ class PushNotificationService{
 
   Future<String> getToken() async {
     String token = await firebaseMessaging.getToken();
-
-    print("This is the Token :::");
-    print(token);
-    Map<String, dynamic> tokenMap = {"token": token,};
-    await databaseMethods.updateDriverDocField(tokenMap, currentDriver.uid);
-
+    await databaseMethods.updateDriverDocField({"token": token}, currentDriver.uid);
     firebaseMessaging.subscribeToTopic("all_drivers");
     firebaseMessaging.subscribeToTopic("all_users");
   }
